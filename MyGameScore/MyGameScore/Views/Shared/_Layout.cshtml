@@ -17,22 +17,16 @@
                     <span class="icon-bar"></span>
                 </button>
                 @Html.ActionLink("Lançar Pontos", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                @Html.ActionLink("Ver Resultados", "Resultados", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Ver Resultados", "Resultado", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Ver Resultados", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
-            </div>
+            
         </div>
     </div>
     <div class="container body-content">
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year -GameStore</p>
+            <p>&copy; @DateTime.Now.Year -GameScore</p>
         </footer>
     </div>
 

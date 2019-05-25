@@ -1,0 +1,44 @@
+﻿@{
+    ViewBag.Title = "Resultado";
+}
+@if (ViewBag.existeDados)
+{
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col"><h2>Resultados</h2></th>
+            <th scope="col">@ViewBag.dataPrimeiroJogo até @ViewBag.dataUltimoJogo</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">Jogos disputados:</th>
+            <td>@ViewBag.totalJogos</td>
+        </tr>
+        <tr>
+            <th scope="row">Total de pontos marcados na temporada:</th>
+            <td>@ViewBag.totalPontos</td>
+        </tr>
+        <tr>
+            <th scope="row">Média de pontos por jogo:</th>
+            <td>@ViewBag.mediaPontoJogo</td>
+        </tr>
+        <tr>
+            <th scope="row">Maior pontuação em um jogo:</th>
+            <td>@ViewBag.maiorPontuacao</td>
+        </tr>
+        <tr>
+            <th scope="row">Menor pontuação em um jogo:</th>
+            <td>@ViewBag.menorPontuacao</td>
+        </tr>
+        <tr>
+            <th scope="row">Quantidade de vezes que bateu o próprio recorde:</th>
+            <td>@ViewBag.qtdeRecorde</td>
+        </tr>
+    </tbody>
+</table>
+}
+else {
+    <h1>Aviso: Não existe dados de jogos cadastrados</h1>
+}
+

@@ -3,24 +3,21 @@ $(function(){
 	$('#btnSalvarJogo').click(function(){
 		
 		var dataJogo = $('#dataJogoInput').val();
-		var pontuacaoI = $('#pontuacaoInput').val();
-		var serviceURL = '/Home/About';
+		var pontuacaoJogo = $('#pontuacaoInput').val();
+		var serviceURL = 'http://localhost:49619/Home/SalvarJogo/';
 		
 		$.ajax({
 			url:serviceURL,
 			type:'POST',
-			data:{data_jogo:dataJogo,pontuacao:pontuacaoI},
-			contentType: "application/json; charset=utf-8",
-            dataType: "json"
-
+			data:{data:dataJogo,pontuacao:pontuacaoJogo}
 		}).done(function(retorno) {			
 
 			var retorno = retorno;
 			if(retorno) {
-				Alert('Seu Cliente foi salvo com Sucesso!');
+				alert('Seus pontos foram lançados com sucesso!');
 			}
 			else {
-				Alert('deu erro');
+				alert('deu erro');
 			}
 		}).fail(function(err){
 			console.log(err);
