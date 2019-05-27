@@ -7,10 +7,8 @@ myGameScore
 
 Arquivo: \MyGameScore\Web.config
 Alterar a instancia na tag 'connectionString' dentro do atributo 'data source':
-  
-  <connectionStrings>
-    <add name="database" connectionString="data source=LUCAS\SQLEXPRESS;initial catalog=MyGameScore;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework" providerName="System.Data.SqlClient" />
-  </connectionStrings>
+
+"add name="database" connectionString="data source=LUCAS\SQLEXPRESS;initial catalog=MyGameScore;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework" providerName="System.Data.SqlClient"
   
 - No arquivo \MyGameScore\Scripts\jogo.cs existe a váriavel com a URL Base para efetuar as requisições na aplicação, sendo assim é necessário revisar se esta de acordo com o LocalHost do ambiente, se necessário alterar a porta:
  
