@@ -2,19 +2,100 @@
     ViewBag.Title = "Home Page";
 }
 
-<form>
-    <div class="form-group">
-       <h2>Lançar pontos:</h2>
-    </div>
-    <div class="form-group">
-        <label for="date-input" class="col-2 col-form-label">Data do Jogo:</label>
-        <div class="col-10">
-            <input class="form-control" type="date" value="@ViewBag.dataDefault" id="dataJogoInput">
+@model MyGameScore.Models.Jogo
+<h1 align="center">Registro de pontos do Basquete</h1>
+
+<!-- Button modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addJogoModal">
+    ADICIONAR JOGO
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="addJogoModal" tabindex="-1" role="dialog" aria-labelledby="addJogoModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h3 class="modal-title" id="addJogoModalLabel">Cadastre um novo jogo:</h3>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="date-input" class="col-2 col-form-label">Data do Jogo:</label>
+                        <div class="col-10">
+                            <input class="form-control" type="date" value="@ViewBag.dataDefault" id="dataJogoInput">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="pontuacao-input">Quantos pontos você fez:</label>
+                        <input type="number" class="form-control" id="pontuacaoInput">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="btnSalvarJogo">Salvar</button>
+            </div>
         </div>
     </div>
-    <div class="form-group">
-        <label for="pontuacao-input">Quantos pontos você fez:</label>
-        <input type="text" class="form-control" id="pontuacaoInput">
+</div>
+
+
+<h2>Lista de Jogos:</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Data do jogo</th>
+            <th scope="col">Pontuação</th>
+            <th scope="col">Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.listaJogos)
+        {
+            <tr id="@item.id">
+                <td>@item.data_jogo.ToString("dd/MM/yyyy")</td>
+                <td>@item.pontuacao</td>
+                <td>
+                    <button type="button" class="btn btn-primary btnEditarJogo" data-toggle="modal" data-target="#editJogoModal">EDITAR</button>
+                    <button type="button" class="btn btn-danger btnDeletarJogo">EXCLUIR</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Modal -->
+<div class="modal fade" id="editJogoModal" tabindex="-1" role="dialog" aria-labelledby="editJogoModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h3 class="modal-title" id="editJogoModalLabel">Cadastre um novo jogo:</h3>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <input type="hidden" id="editIDJogoInput" placeholder="id" class="form-control" />
+                    <div class="form-group">
+                        <label for="date-input" class="col-2 col-form-label">Data do Jogo:</label>
+                        <div class="col-10">
+                            <input class="form-control" type="date" id="editDataJogoInput">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="pontuacao-input">Quantos pontos você fez:</label>
+                        <input type="number" class="form-control" value="" id="editPontuacaoInput">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="btnEditarJogo">Salvar</button>
+            </div>
+        </div>
     </div>
-    <button type="button" class="btn btn-primary" id="btnSalvarJogo">SALVAR</button>
-</form>
+</div>

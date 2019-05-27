@@ -19,20 +19,21 @@
                 @Html.ActionLink("Lançar Pontos", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
                 @Html.ActionLink("Ver Resultados", "Resultado", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
-            
+
         </div>
     </div>
     <div class="container body-content">
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year -GameScore</p>
+            <p align="center">&copy; @DateTime.Now.Year - GameScore</p>
         </footer>
     </div>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/jogo")
+    @Scripts.Render("~/bundles/sweetAlert")
     @RenderSection("scripts", required: false)
 </body>
 </html>

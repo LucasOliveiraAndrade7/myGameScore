@@ -1,5 +1,7 @@
 ﻿using MyGameScore.Models;
+using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -9,32 +11,136 @@ namespace MyGameScore.Controllers
     {
         public ActionResult Index()
         {
+            DBContext db = new DBContext();
+            Jogo jogo = new Jogo();
+
+            var listaJogos = db.jogo.OrderBy(x => x.data_jogo).ToList();
+
+            ViewBag.listaJogos = listaJogos;
             ViewBag.dataDefault = DateTime.Now.ToString("yyyy-MM-dd");
+
+
             return View();
 
         }
 
-        public ActionResult SalvarJogo(DateTime data, int pontuacao)
-        {            
+        public bool SalvarJogo(DateTime data, int pontuacao)
+        {
             DBContext db = new DBContext();
             Jogo jogo = new Jogo();
 
-            jogo.pontuacao = pontuacao;
-            jogo.data_jogo = data;
+            try
+            {
+                jogo.pontuacao = pontuacao;
+                jogo.data_jogo = data;
 
-            db.jogo.Add(jogo);
-            db.SaveChanges();
+                db.jogo.Add(jogo);
+                db.SaveChanges();
 
-            return View();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public bool ExcluirJogo(int Id)
+        {
+            DBContext db = new DBContext();
+            Jogo jogo = new Jogo();
+
+            try
+            {
+                var result = from r in db.jogo where r.id == Id select r;
+
+                if (result != null)
+                {
+                    foreach (var item in result)
+                    {
+                        db.jogo.Remove(item);
+                    }
+
+                    db.SaveChanges();
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public JsonResult SelecionarJogo(int Id)
+        {
+            DBContext db = new DBContext();
+            Jogo jogo = new Jogo();
+
+            try
+            {
+                var resultJogo = from r in db.jogo where r.id == Id select r;
+                string json = "";
+
+                if (resultJogo != null)
+                {
+                    foreach (var item in resultJogo)
+                    {
+                        json = JsonConvert.SerializeObject(new
+                        {
+                            results = new List<Jogo>()
+                            {
+                                new Jogo { id = item.id, data_jogo = item.data_jogo, pontuacao = item.pontuacao }
+                            }
+                        });
+
+                        return Json(json);
+                    }
+                }
+
+                var resultDado = new { Sucesso = false };
+                return Json(resultDado);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public bool EditarJogo(int id, DateTime data, int pontuacao)
+        {
+            DBContext db = new DBContext();
+            Jogo jogo = new Jogo();
+
+            try
+            {                
+                var result = db.jogo.SingleOrDefault(x => x.id == id);
+                
+                if (result != null)
+                {
+                    jogo.id = id;
+                    jogo.data_jogo = data;
+                    jogo.pontuacao = pontuacao;
+
+                    db.Entry(result).CurrentValues.SetValues(jogo);
+                    db.SaveChanges();                    
+                }
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public ActionResult Resultado()
         {
-            
-            DBContext db = new DBContext();
-            Jogo jogo = new Jogo();            
 
-            var listaJogos = db.jogo.ToList();
+            DBContext db = new DBContext();
+            Jogo jogo = new Jogo();
+
+            var listaJogos = db.jogo.OrderBy(x => x.data_jogo).ToList();
 
             if (listaJogos != null && listaJogos.Count > 0)
             {
@@ -49,12 +155,13 @@ namespace MyGameScore.Controllers
                 var qtdRecorde = 0;
                 int pontuacaoAnterior = 0;
                 int recorde = 0;
+                var primeiraPontuacao = listaJogos.Select(x => x.pontuacao).First();
 
                 foreach (var item in listaJogos)
                 {
                     if (pontuacaoAnterior > 0)
                     {
-                        if (item.pontuacao > pontuacaoAnterior && item.pontuacao > recorde)
+                        if (item.pontuacao > pontuacaoAnterior && item.pontuacao > recorde && item.pontuacao > primeiraPontuacao)
                         {
                             recorde = item.pontuacao;
                             qtdRecorde++;

@@ -24,10 +24,14 @@ namespace MyGameScore
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/sweetAlert.min.css",
                       "~/Content/site.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/jogo").Include(
                       "~/Scripts/jogo.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/sweetAlert").Include(
+                     "~/Scripts/sweetAlert.min.js"));
         }
     }
 }
