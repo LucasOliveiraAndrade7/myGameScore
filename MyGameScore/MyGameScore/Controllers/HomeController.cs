@@ -52,6 +52,7 @@ namespace MyGameScore.Controllers
 
             try
             {
+                bool retorno = false;
                 var result = from r in db.jogo where r.id == Id select r;
 
                 if (result != null)
@@ -62,9 +63,10 @@ namespace MyGameScore.Controllers
                     }
 
                     db.SaveChanges();
+                    retorno = true;
                 }
 
-                return true;
+                return retorno;
             }
             catch (Exception ex)
             {
@@ -113,9 +115,10 @@ namespace MyGameScore.Controllers
             Jogo jogo = new Jogo();
 
             try
-            {                
+            {
+                bool retorno = false;
                 var result = db.jogo.SingleOrDefault(x => x.id == id);
-                
+
                 if (result != null)
                 {
                     jogo.id = id;
@@ -123,10 +126,11 @@ namespace MyGameScore.Controllers
                     jogo.pontuacao = pontuacao;
 
                     db.Entry(result).CurrentValues.SetValues(jogo);
-                    db.SaveChanges();                    
+                    db.SaveChanges();
+                    retorno = true;
                 }
 
-                return true;
+                return retorno;
             }
             catch (Exception)
             {
@@ -136,7 +140,6 @@ namespace MyGameScore.Controllers
 
         public ActionResult Resultado()
         {
-
             DBContext db = new DBContext();
             Jogo jogo = new Jogo();
 
@@ -151,6 +154,8 @@ namespace MyGameScore.Controllers
                 var menorPontuacao = listaJogos.Min(x => x.pontuacao);
                 var dataPrimeiroJogo = listaJogos.Min(x => x.data_jogo);
                 var dataUltimoJogo = listaJogos.Max(x => x.data_jogo);
+
+                //Lógica para verificar quantidade de vezes que bateu o próprio recorde
 
                 var qtdRecorde = 0;
                 int pontuacaoAnterior = 0;

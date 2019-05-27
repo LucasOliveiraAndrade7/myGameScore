@@ -1,5 +1,6 @@
 $(function(){
 	
+	var baseUrl = 'http://localhost:49619';
 	
 	//Salvar novo jogo
 
@@ -7,7 +8,7 @@ $(function(){
 		
 		var dataJogo = $('#dataJogoInput').val();
 		var pontuacaoJogo = $('#pontuacaoInput').val();
-		var serviceURL = 'http://localhost:49619/Home/SalvarJogo/';
+		var serviceURL = baseUrl + '/Home/SalvarJogo/';
 		
 		if (pontuacaoJogo == "")
 		{
@@ -71,7 +72,7 @@ $(function(){
 	$(document).on('click','.btnDeletarJogo',function(){
 
 		var idJogo = $(this).closest('tr').attr('id');
-		var serviceURL = 'http://localhost:49619/Home/ExcluirJogo/';
+		var serviceURL = baseUrl + '/Home/ExcluirJogo/';
 
 		swal({
 			  title: 'Você tem certeza?',
@@ -114,12 +115,12 @@ $(function(){
 	
 	
 	
-	// Botao EDITAR
+	// Recupera os dados para Editar
 
 	$(document).on('click','.btnEditarJogo',function(){
 
 		var idJogo = $(this).closest('tr').attr('id');
-		var serviceURL = 'http://localhost:49619/Home/SelecionarJogo/';
+		var serviceURL = baseUrl + '/Home/SelecionarJogo/';
 
 		$.ajax({
 			url:serviceURL,
@@ -162,7 +163,7 @@ $(function(){
 		var idJogo = $('#editIDJogoInput').val();
 		var dataJogo = $('#editDataJogoInput').val();
 		var pontuacaoJogo = $('#editPontuacaoInput').val();
-		var serviceURL = 'http://localhost:49619/Home/EditarJogo/';
+		var serviceURL = baseUrl + '/Home/EditarJogo/';
 		
 		if (pontuacaoJogo == "")
 		{

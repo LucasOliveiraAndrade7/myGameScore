@@ -5,12 +5,12 @@
 @model MyGameScore.Models.Jogo
 <h1 align="center">Registro de pontos do Basquete</h1>
 
-<!-- Button modal -->
+<!-- Button modal AddJogo -->
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addJogoModal">
     ADICIONAR JOGO
 </button>
 
-<!-- Modal -->
+<!-- Modal Adiciona Jogo -->
 <div class="modal fade" id="addJogoModal" tabindex="-1" role="dialog" aria-labelledby="addJogoModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -42,6 +42,7 @@
     </div>
 </div>
 
+<!-- Lista dos registros de Jogos -->
 
 <h2>Lista de Jogos:</h2>
 <table class="table">
@@ -67,7 +68,7 @@
     </tbody>
 </table>
 
-<!-- Modal -->
+<!-- Modal Editar Jogos -->
 <div class="modal fade" id="editJogoModal" tabindex="-1" role="dialog" aria-labelledby="editJogoModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
